@@ -5,6 +5,7 @@ import os
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from crud.person import create_person, get_person_by_email, get_person, get_persons, update_person_details, delete_person
+from crud.organization import create_organization, get_organization, get_organizations
 from db import schemas, models
 from db.database import SessionLocal, engine
 
@@ -22,6 +23,11 @@ def get_db():
 @app.get('/')
 def root():
     return RedirectResponse("/docs")
+
+
+@app.post('/organization', response_model=schemas.Organization)
+def create_organization_handler(organization: schemas.OrganizationCreate, db: Session = Depends(get_db)):
+    return create_organization(db=db, organization=organization)
 
 
 @app.get('/api', response_model=List[schemas.Person])

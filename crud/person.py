@@ -31,7 +31,7 @@ def update_person_details(db: Session, person_id: int, updated_details: schemas.
     return db_person
 
 def create_person(db: Session, person: schemas.PersonCreate):
-    db_person = models.Person(email=person.email, first_name=person.first_name, last_name=person.last_name)
+    db_person = models.Person(email=person.email, first_name=person.first_name, last_name=person.last_name, organization_id=person.organization_id)
     db.add(db_person)
     db.commit()
     db.refresh(db_person)
